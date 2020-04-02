@@ -1,0 +1,49 @@
+﻿@page
+@model MoviesModel
+
+@{
+    ViewData["Title"] = "Movies";
+}
+
+<h1>Movies</h1>
+<a asp-page="./SeedDatabase">Seed Database</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Title)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].StartTime)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].SeatsLeft)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Movie[0].Salon)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.Movie) {
+        <tr>
+            <td>
+                @Html.DisplayFor(modelItem => item.Title)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.StartTime)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.SeatsLeft)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Salon)
+            </td>
+            <td>
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

@@ -1,0 +1,23 @@
+﻿@page
+@model WebbLabb3.SeedDatabaseModel
+@{
+    ViewData["Title"] = "SeedDatabase";
+}
+
+<h1>Seed Database</h1>
+
+@if (Model.CheckDatabase() == false)
+{
+    <form method="post">
+        <button asp-page-handler="seeddatabase" method="post">Seed Database</button>
+    </form>
+}
+else
+{
+<form asp-page-handler="cleardatabase" method="post">
+    <button>Clear database</button>
+</form>
+}
+<div>
+    <a asp-page="./Movies">Back to List</a>
+</div>
