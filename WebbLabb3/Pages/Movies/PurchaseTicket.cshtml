@@ -1,13 +1,13 @@
 ﻿@page
-@model WebbLabb3.DetailsModel
-
+@model PurchaseTicketModel
 @{
-    ViewData["Title"] = "Details";
+    ViewData["Title"] = "PurchaseTicket";
 }
 
-<h1>Details</h1>
-
-<div>
+<h1>PurchaseTicket</h1>
+<h4>Movie</h4>
+<hr />
+<div class="col-md-4">
     <h4>Movie</h4>
     <hr />
     <dl class="row">
@@ -36,7 +36,21 @@
             @Html.DisplayFor(model => model.Movie.Salon)
         </dd>
     </dl>
+    <div>
+        <form method="post">
+            <label class="control-label">Number of tickets</label>
+            <input asp-for="TicketAmount" class="form-control" >
+            <div class="form-group">
+                <button asp-page-handler="purchaseticket" asp-route-id="@Model.Movie.ID">Purchase ticket(s)</button>
+            </div>
+        </form>
+    </div>
 </div>
+
 <div>
-    <a asp-page="./Index">Back to List</a>
+    <a asp-page="./Movies">Back to List</a>
 </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

@@ -4,7 +4,16 @@
 @{
     ViewData["Title"] = "Movies";
 }
-
+<style>
+    .not-full
+    {
+        background-color:white;
+    }
+    .full
+    {
+        background-color: lightgray;
+    }
+</style>
 <h1>Movies</h1>
 <a asp-page="./SeedDatabase">Seed Database</a>
 <table class="table">
@@ -26,24 +35,30 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Movie) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Title)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.StartTime)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.SeatsLeft)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Salon)
-            </td>
-            <td>
-                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
-            </td>
-        </tr>
+@foreach (var item in Model.Movie) 
+{
+<tr class="@(item.SeatsLeft > 0 ? "not-" : "")full">
+        <td>
+            @Html.DisplayFor(modelItem => item.Title)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.StartTime)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.SeatsLeft)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.Salon)
+        </td>
+        <td>
+            <a asp-page="./Details" asp-route-id="@item.ID">Details</a> 
+            @if (item.SeatsLeft > 0)
+            {
+                <a asp-page="./PurchaseTicket" asp-route-id="@item.ID">Purchase ticket(s)</a> 
+            }
+        </td>
+</tr>
+    
 }
     </tbody>
 </table>
