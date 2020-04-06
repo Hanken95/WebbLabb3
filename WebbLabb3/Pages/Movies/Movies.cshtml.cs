@@ -17,11 +17,22 @@ namespace WebbLabb3
             _context = context;
         }
 
-        public IList<Movie> Movie { get;set; }
+        public string StartTimeSort { get; set; }
+        public string SeatsLeftSort { get; set; }
+        public IList<Movie> Movie { get; set; }
 
-        public async Task OnGetAsync()
+        public async Task OnGetAsync(string sortOrder)
         {
             Movie = await _context.Movie.ToListAsync();
+            if (sortOrder == "StartTime")
+            {
+                Movie = Movie.OrderByDescending(s => s.StartTime).ThenByDescending(s => s.SeatsLeft).ToList();
+            }
+            else if (sortOrder == "SeatsLeft")
+            {
+                Movie = Movie.OrderByDescending(s => s.SeatsLeft).ThenByDescending(s => s.StartTime).ToList();
+            }
+            await _context.SaveChangesAsync();
         }
     }
 }

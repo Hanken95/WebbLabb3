@@ -39,9 +39,16 @@
     <div>
         <form method="post">
             <label class="control-label">Number of tickets</label>
-            <input asp-for="TicketAmount" class="form-control" >
+            <select asp-for="TicketAmount" class="form-control">
+                @for (int i = 1; i <= Model.MaxTickets; i++)
+                {
+                    <option value=@i>@i</option>
+                }
+            </select>
             <div class="form-group">
-                <button asp-page-handler="purchaseticket" asp-route-id="@Model.Movie.ID">Purchase ticket(s)</button>
+                <button asp-page-handler="purchaseticket" asp-route-id="@Model.Movie.ID">
+                    Purchase ticket(s)
+                </button>
             </div>
         </form>
     </div>

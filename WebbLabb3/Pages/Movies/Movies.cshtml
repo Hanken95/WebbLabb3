@@ -23,10 +23,14 @@
                 @Html.DisplayNameFor(model => model.Movie[0].Title)
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].StartTime)
+                <a asp-page="./Movies" asp-route-sortOrder="StartTime">
+                    @Html.DisplayNameFor(model => model.Movie[0].StartTime)
+                </a>
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Movie[0].SeatsLeft)
+                <a asp-page="./Movies" asp-route-sortOrder="SeatsLeft">
+                    @Html.DisplayNameFor(model => model.Movie[0].SeatsLeft)
+                </a>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Movie[0].Salon)

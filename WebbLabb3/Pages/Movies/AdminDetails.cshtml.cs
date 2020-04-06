@@ -8,28 +8,23 @@ using Microsoft.EntityFrameworkCore;
 
 namespace WebbLabb3
 {
-    public class PurchaseResultModel : PageModel
+    public class AdminDetailsModel : PageModel
     {
         private readonly WebbLabb3Context _context;
 
-        public PurchaseResultModel(WebbLabb3Context context)
+        public AdminDetailsModel(WebbLabb3Context context)
         {
             _context = context;
         }
 
         public Movie Movie { get; set; }
-        public int? TicketAmount { get; set; }
-        public bool? PurchaseSuccess { get; set; }
 
-        public async Task<IActionResult> OnGetAsync(int? id, int? ticketAmount, bool? purchaseSuccess)
+        public async Task<IActionResult> OnGetAsync(int? id)
         {
-            TicketAmount = ticketAmount;
-            PurchaseSuccess = purchaseSuccess;
-            if (id == null || TicketAmount == null || PurchaseSuccess == null)
+            if (id == null)
             {
                 return NotFound();
             }
-            
 
             Movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == id);
 

@@ -23,7 +23,9 @@ namespace WebbLabb3
 
         [BindProperty]
         public int TicketAmount { get; set; }
-        
+        public int MaxTickets { get; set; }
+        public bool PurchaseSuccess { get; set; }
+
         public async Task<IActionResult> OnGetAsync(int? id)
         {
             if (id == null)
@@ -32,7 +34,14 @@ namespace WebbLabb3
             }
 
             Movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == id);
-
+            if (Movie.SeatsLeft <= 12)
+            {
+                MaxTickets = Movie.SeatsLeft;
+            }
+            else
+            {
+                MaxTickets = 12;
+            }
             if (Movie == null)
             {
                 return NotFound();
@@ -69,7 +78,6 @@ namespace WebbLabb3
 
             return RedirectToPage("./Index");
         }
-
         public async Task<IActionResult> OnPostPurchaseTicket(int? id)
         {
             if (id == null)
@@ -79,17 +87,23 @@ namespace WebbLabb3
             Movie = await _context.Movie.FirstOrDefaultAsync(m => m.ID == id);
             if (Movie != null)
             {
-                if (Movie.SeatsLeft >= TicketAmount)
+                if (Movie.SeatsLeft >= TicketAmount && TicketAmount > 0)
                 {
                     Movie.SeatsLeft -= TicketAmount;
+                    PurchaseSuccess = true;
+                    await _context.SaveChangesAsync();
+                    return RedirectToPage("./PurchaseResult", new { Movie.ID, TicketAmount, PurchaseSuccess });
+                }
+                else
+                {
+                    PurchaseSuccess = false;
+                    return RedirectToPage("./PurchaseResult", new { Movie.ID, TicketAmount, PurchaseSuccess });
                 }
             }
             else
             {
                 return NotFound();
             }
-            await _context.SaveChangesAsync();
-            return Page();
         }
         private bool MovieExists(int id)
         {
